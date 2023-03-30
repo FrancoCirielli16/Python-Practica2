@@ -20,13 +20,18 @@ def notas_sin_repetir(notas_1, notas_2):
 
 def obtener_promedios(notas_1, notas_2):
     return list(map(lambda x,y:(x+y)/2,notas_1,notas_2))
+"""Uso map para generar una lista nueva con los resultados de la funcion lambda que 
+lo que hace es tomar de los iterables dos notas y sumarlas para despues dividirla y quedarme con el promedio"""
 
-def promedio_general(notas_1, notas_2, nombres):
-    return sum(obtener_promedios(notas_1,notas_2))/len(nombres)
+def promedio_general(notas_1, notas_2s):
+    return sum(obtener_promedios(notas_1,notas_2))/len(notas_1)
 
 def promedio_mas_alto(notas_1, notas_2, nombres):
     promedios = obtener_promedios(notas_1,notas_2)
-    index_max = promedios.index(max(promedios))
-    return nombres[index_max]
+    index_max = promedios.index(max(promedios)) #Obtengo el index donde esta el promedio mas alto 
+    return nombres[index_max] #retorno el nombre
 
 
+#Falta obtener la nota mas baja 
+
+#Se obtiene entre las dos notas? o se suman las notas y me quedo con la minima 
