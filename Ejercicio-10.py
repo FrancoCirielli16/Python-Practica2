@@ -15,8 +15,26 @@ notas_2 = [30, 95, 28, 84, 84, 43, 66, 51, 4, 11, 58, 10, 13, 34, 96, 71, 86, 37
 39, 15, 74, 33, 57, 10]
 
 
-def notas_sin_repetir(notas_1, notas_2):
-    return set(notas_1 + notas_2)
+def generar_estrucutra(notas_1, notas_2,nombres):
+    nombres = nombres.split(", ")
+
+    alumnos = list(zip(nombres, notas_1, notas_2)) #Genero una lista con tublas la cual va a estar 
+                                                    #conformada por el nombre y sus dos notas correspondientes
+    
+    return alumnos
+
+def generar_estrucutra2(notas_1, notas_2,nombres):
+    
+    nombres = nombres.split(", ")
+    
+    alumnos = {}
+    
+    for nombre, nota_1, nota_2 in zip(nombres, notas_1, notas_2): #Con zip genero una tupla con el nombre y sus dos notas
+                    #Y luego en nombre , nota_1 y nota_2 toman sus valores correspondientes para trabajar el diccionario
+    
+        alumnos[nombre] = (nota_1, nota_2)
+    
+    return(alumnos)
 
 def obtener_promedios(notas_1, notas_2):
     return list(map(lambda x,y:(x+y)/2,notas_1,notas_2))
@@ -32,6 +50,4 @@ def promedio_mas_alto(notas_1, notas_2, nombres):
     return nombres[index_max] #retorno el nombre
 
 
-#Falta obtener la nota mas baja 
-
-#Se obtiene entre las dos notas? o se suman las notas y me quedo con la minima 
+print(generar_estrucutra(notas_1, notas_2, nombres))

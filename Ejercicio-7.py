@@ -10,13 +10,15 @@ no_letras = 0
 palabras = len(texto.split())
 
 
-for palabra in texto:
-    if(palabra.isupper()):
-        mayusculas+=1
-    if(palabra.islower()):
-        minusculas+=1
-    if(not palabra.isalpha() and (not palabra.isspace())):
+for letra in texto:
+    if(not letra.isalpha() and (not letra.isspace())):
         no_letras+=1
+        continue
+    if(letra.isupper()):
+        mayusculas+=1
+    elif(letra.islower()):
+        minusculas+=1
+   
 
 # Imprimir resultados
 print("Mayúsculas: {}".format(mayusculas))
