@@ -15,39 +15,65 @@ notas_2 = [30, 95, 28, 84, 84, 43, 66, 51, 4, 11, 58, 10, 13, 34, 96, 71, 86, 37
 39, 15, 74, 33, 57, 10]
 
 
-def generar_estrucutra(notas_1, notas_2,nombres):
+def generar_estrucutra_list(notas_1, notas_2,nombres):
     nombres = nombres.split(", ")
-
     alumnos = list(zip(nombres, notas_1, notas_2)) #Genero una lista con tublas la cual va a estar 
-                                                    #conformada por el nombre y sus dos notas correspondientes
-    
-    return alumnos
+    return alumnos                              #conformada por el nombre y sus dos notas correspondientes
+  
 
-def generar_estrucutra2(notas_1, notas_2,nombres):
-    
+def generar_estrucutra_dict(notas_1, notas_2,nombres):
     nombres = nombres.split(", ")
-    
     alumnos = {}
-    
     for nombre, nota_1, nota_2 in zip(nombres, notas_1, notas_2): #Con zip genero una tupla con el nombre y sus dos notas
-                    #Y luego en nombre , nota_1 y nota_2 toman sus valores correspondientes para trabajar el diccionario
-    
-        alumnos[nombre] = (nota_1, nota_2)
-    
+        alumnos[nombre] = (nota_1, nota_2)#Y luego en nombre , nota_1 y nota_2 toman sus valores correspondientes para trabajar el diccionario
     return(alumnos)
 
-def obtener_promedios(notas_1, notas_2):
-    return list(map(lambda x,y:(x+y)/2,notas_1,notas_2))
-"""Uso map para generar una lista nueva con los resultados de la funcion lambda que 
-lo que hace es tomar de los iterables dos notas y sumarlas para despues dividirla y quedarme con el promedio"""
 
-def promedio_general(notas_1, notas_2s):
-    return sum(obtener_promedios(notas_1,notas_2))/len(notas_1)
+def obtener_promedios(estructura):
+    return list(map(lambda x: (x[0] + x[1])/2, estructura.values()))
+    """Uso map para generar una lista nueva con los resultados de la funcion lambda que 
+    lo que hace es tomar de los iterables dos notas y sumarlas para despues dividirla y quedarme con el promedio"""
 
-def promedio_mas_alto(notas_1, notas_2, nombres):
-    promedios = obtener_promedios(notas_1,notas_2)
+
+def promedio_general(promedios):
+    return sum(promedios)/len(promedios)
+
+
+def promedio_mas_alto(promedios,nombres):
     index_max = promedios.index(max(promedios)) #Obtengo el index donde esta el promedio mas alto 
-    return nombres[index_max] #retorno el nombre
+    return nombres.split(", ")[index_max], promedios[index_max] #retorno el nombre
 
 
-print(generar_estrucutra(notas_1, notas_2, nombres))
+def nota_mas_baja(diccionario):
+    notas_sumadas = {nombre: sum(notas) for nombre, notas in diccionario.items()}
+    nombre_minimo = min(notas_sumadas, key=notas_sumadas.get)
+    return nombre_minimo,min(diccionario[nombre_minimo])
+
+
+
+
+if __name__ == "__main__":
+    print("-"*100)
+
+    nueva_estrucutra = generar_estrucutra_dict(notas_1,notas_2,nombres)
+
+    # Imprimir promedios de todos los alumnos
+    promedios = obtener_promedios(nueva_estrucutra)
+    print("Promedios de todos los alumnos:")
+    print(promedios)
+
+    # Imprimir promedio general
+    promedio_general = promedio_general(promedios)
+    print(f"\nPromedio general: {promedio_general:.2f}")
+
+    # Imprimir alumno con el promedio más alto
+    nombre_promedio_max = promedio_mas_alto(promedios, nombres)
+    print(f"\nAlumno con el promedio más alto: {nombre_promedio_max[0]}")
+    print(f"Promedio: {nombre_promedio_max[1]:.2f}")
+
+    # Imprimir alumno con la nota más baja
+    nombre_nota_minima = nota_mas_baja(nueva_estrucutra)
+    print(f"\nAlumno con la nota más baja: {nombre_nota_minima[0]}")
+    print(f"Nota: {nombre_nota_minima[1]}")
+
+    print("-" * 100)
